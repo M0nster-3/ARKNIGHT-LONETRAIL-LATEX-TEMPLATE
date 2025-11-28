@@ -1,0 +1,38 @@
+\input{setting.tex}
+\input{setting2.tex}  
+
+
+\begin{document}
+	
+	% ---------------- 1. 封面 ----------------
+	\pagestyle{empty} % 封面无页码
+	\input{cover.tex}
+	\thispagestyle{empty}	
+	\clearpage
+	
+	% ---------------- 2. 目录 ----------------
+	\newgeometry{left=2.1cm,right=0.95cm,top=5.8cm,bottom=2cm}
+	\input{contents.tex}  % 加载所有目录设置
+	\makecustomtoc       % 执行自定义目录（自动应用背景、样式、布局）
+	\clearpage           % 目录后分页
+	\restoregeometry
+
+	% ---------------- 3. 正文 ----------------
+	\pagenumbering{arabic}  % 恢复阿拉伯数字页码
+	\setcounter{page}{1}    % 正文从 1 开始
+	\pagestyle{empty}       % 禁用默认页码样式，使用TikZ自定义
+	
+	% ========== 正文背景设置（保持不变） ==========
+	\backgroundsetup{
+		scale=1.0,          % 图片缩放比例（1.0为原尺寸）
+		angle=0,            % 图片旋转角度（0为不旋转）
+		opacity=1,          % 透明度（建议适当降低，避免遮挡文字）
+		contents={\includegraphics[width=\paperwidth,height=\paperheight]{素材库/正文}},  % 正文背景图
+		placement=bottom,   % 背景在底层，标题/页码在上方
+		pages=all           % 所有正文页应用此背景
+	}
+	% =======================正文内容(下面)=========================
+
+	\input{正文/测试.tex}
+
+\end{document}
