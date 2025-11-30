@@ -147,9 +147,93 @@ XHS:Mikukawaii2
   <img width="200" alt="08" src="https://github.com/user-attachments/assets/bf248da5-da57-4a9e-be7b-8017f558e390" style="object-fit: contain;">
 </div>
 
-正文也没有什么需要手动调整的地方，对应文件为setting1.tex，里面是页眉、页面文字的相关设置
+正文也没有什么需要手动调整的地方，对应文件为setting.tex，里面是页眉、页面文字的相关设置
 
 左上角是一级标题，右上角是二级标题，不过有时候隔一页才会出现二级标题
 
-主要还是得说说盒子的设置
+主要还是得说说盒子的设置，对应文件为setting2.tex，如果有代码看不懂我的提议是去问GPT或gemini，其他的大模型我非常不推荐
 
+通用盒子
+
+```tex
+% 通用三栏标题盒命令1（左右图片 + 中间自适应文字）
+\newcommand{\TitleBoxI}[5]{%
+	\setlength{\textwd}{0pt}%
+	\sbox0{\fontsize{20}{22}\selectfont\SiYuan\XeTeXinterchartokenstate=0 #2}%
+	\setlength{\textwd}{\widthof{\usebox0}}%
+	\begin{tabular}[c]{@{}c@{}c@{}c@{}}
+		\raisebox{-\height + 12pt}{%
+			\resizebox{!}{24pt}{\includegraphics{#1}}%
+		} &
+		\raisebox{-\height + 12pt}{%
+			\colorbox{#4}{%
+				\parbox[c][18pt][c]{\textwd}{%
+					\centering
+					\fontsize{18}{22}\selectfont\SiYuan\XeTeXinterchartokenstate=0\color{#5} #2%
+				}%
+			}%
+		} &
+		\raisebox{-\height + 12pt}{%
+			\resizebox{!}{24pt}{\includegraphics{#3}}%
+		}
+	\end{tabular}%
+}
+
+%===================================================================
+我设置4个通用盒子，左右是图片，中间是随文字长度变化
+通过\sbox0{\fontsize{20}{22}\selectfont\SiYuan\XeTeXinterchartokenstate=0 #2}%
+修改里面的字体大小，可以让文字与左右间隔变大
+\fontsize{18}{22}\selectfont\SiYuan\XeTeXinterchartokenstate=0\color{#5} #2%
+这里可以修改字体大小
+```
+
+一些给定的盒子和自定义盒子
+
+```tex
+\begin{definition}{测试定义}
+\end{definition}
+
+\begin{theorem}{测试定理}
+\end{theorem}
+
+\begin{proposition}{测试命题}
+\end{proposition}
+
+\begin{corollary}{测试推论}
+\end{corollary}
+
+\begin{lemma}{测试引理}
+\end{lemma}
+
+\begin{example}{测试示例}
+\end{example}
+
+\begin{exercise}{练习}
+\end{exercise}
+
+\begin{prove}
+\end{prove}
+
+\begin{remark}
+\end{remark}
+
+\begin{box1}{测试}
+\end{box1}
+
+\begin{box2}{测试}
+\end{box2}
+
+\begin{box3}{测试}
+\end{box3}
+
+\begin{box4}{测试}
+\end{box4}
+
+%=========================================
+上面是设置的一些数学盒子，调用代码同上面
+这里box1-4是展示了一些可以自定义盒子的方法
+在 素材库/正文 下面有一些素材可以按照同样的方法可以自定义盒子
+我附上了AI文件，里面也有孤星的素材，会AI的可以在里面手搓
+```
+
+其实多用几次就会了...
