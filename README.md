@@ -1,13 +1,17 @@
 # 明日方舟孤星Latex模板
+
 ## 0.特别声明
+
 仓库内美术素材版权归明日方舟所有，仅供学习交流使用，本人无任何盈利行为；严禁商业用途，否则后果自负  
 
-仓库里附上了AI源文件，不过个人接触AI不到一个月，水平很有限，里面的素材还是挺粗糙的...  
+仓库里附上了AI源文件，不过本人接触AI不到一个月，水平很有限，里面的素材还是挺粗糙的...  
 
 其余的请博士们随意(如自用或拼团)，也可以根据个人喜好修改里面素材，本人不会有任何意见  
 
 XHS:Mikukawaii2
+
 ## 1.封面相关设置
+
 (PS:封面代码有点麻烦，想要实现原本排版但是元素对齐代码我个人实现不了，  
 
 就改了现在的这一版，简单但是和我原本的排版思路有差别)  
@@ -15,9 +19,10 @@ XHS:Mikukawaii2
 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
   <img width="200" alt="封面草稿图" src="https://github.com/user-attachments/assets/07af5237-7f33-47db-886e-c5e92e9533b7" style="object-fit: contain;">
   <img width="200" alt="封面" src="https://github.com/user-attachments/assets/ede1a88c-0c20-4229-afdc-ba3266bcc4ee" style="object-fit: contain;">
+   <img width="200" alt="122" src="https://github.com/user-attachments/assets/d8bbf982-1c6a-4c60-9035-23b49e028bac" style="object-fit: contain;">
 </div>  
 
-如左图所示，在封面有三个地方需要进行设置，提醒一下需要根据内容自行调整...   
+如左图所示，在封面有三个地方需要进行设置。特别提醒一下需要根据内容自行调整，对应文件为cover.tex
 
 封面标题
 
@@ -29,7 +34,6 @@ XHS:Mikukawaii2
 	\SiYuan 测度论
 }
 
-
  \node[
    anchor=north west,
    minimum width=280pt,
@@ -40,7 +44,6 @@ XHS:Mikukawaii2
    align=left,
    %align=center,
    ] at ($(current page.north west) + (10.096cm,-5.4467cm)$) {\TitleText};
-
 
 %=====================================代码说明================================
 在代码\fontsize{36}{12}\selectfont\color{qiancheng}\XeTeXinterchartokenstate=0中  
@@ -96,3 +99,57 @@ XHS:Mikukawaii2
 这里我觉得参考可以写多一点，让整个封面的左下角有点内容，看着就不会空
 可以加一些莫名其妙的东西，把老师名字放进去也没有问题...
 ```
+
+上面设置完后就是右图的效果
+
+## 2.目录相关设置
+
+<div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+  <img width="200" alt="233" src="https://github.com/user-attachments/assets/80b4aa1c-ad6e-4320-8232-4d3500a5007f" style="object-fit: contain;">
+  <img width="200" alt="目录" src="https://github.com/user-attachments/assets/d4a88a7d-d5dc-4123-adc7-e8722058a870" style="object-fit: contain;">
+</div>
+
+目录其实没什么要改的，对应文件为contents.tex，不过有BUG需要注意一下
+
+```tex
+\renewcommand{\cftsecfont}{\SiYuan\fontsize{16pt}{20pt}\selectfont\bfseries\XeTeXinterchartokenstate=0}
+\renewcommand{\cftsecpagefont}{\SiYuan\fontsize{16pt}{20pt}\selectfont\bfseries\XeTeXinterchartokenstate=0}
+\renewcommand{\cftsubsecfont}{\SiYuan\fontsize{12pt}{20pt}\selectfont\bfseries\XeTeXinterchartokenstate=0}
+\renewcommand{\cftsubsecpagefont}{\SiYuan\fontsize{12pt}{20pt}\selectfont\bfseries\XeTeXinterchartokenstate=0}
+
+\newcommand{\invisibletext}{\phantom{占位本}}
+\newcommand{\makecustomtoc}{%
+	\BgThispage 
+	\begin{adjustwidth}{100pt}{0pt}
+		\begin{multicols}{2}
+			\tableofcontents
+			{\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\ {\invisibletext}\\
+		\end{multicols}
+	\end{adjustwidth}
+	\AtBeginShipoutNext{\AtBeginShipoutDiscard}%
+}
+
+%==============================================================================
+这里我启用了两栏的目录，主要说一下这里的代码问题：
+1.有时候你的标题太长了，导致超出了目录的栏距，你可以通过
+\renewcommand{\cftsubsecfont}{\SiYuan\fontsize{12pt}{20pt}\selectfont\bfseries\XeTeXinterchartokenstate=0}
+修改上面的字体大小来对二级标题进行调整(也可以将标题简略)
+2.因为实现不了蛇形目录(左边排满才排右边)，因此我用一些隐形的占位符进行占位
+然后用\AtBeginShipoutNext{\AtBeginShipoutDiscard}将可能出现的新空白目录页删除
+但是有时候你的新目录(不是空的)可能会删除，这时候用%注释掉\AtBeginShipoutNext{\AtBeginShipoutDiscard}即可
+```
+
+## 3.正文及其盒子的设置
+
+<div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+  <img width="200" alt="正文" src="https://github.com/user-attachments/assets/cc3554ef-3bc5-4fd2-ba95-af5ceaf90e3b" style="object-fit: contain;">
+  <img width="200" alt="7876" src="https://github.com/user-attachments/assets/c0ee4a47-0d95-4ad1-a5d5-b0d28c55924f" style="object-fit: contain;">
+  <img width="200" alt="08" src="https://github.com/user-attachments/assets/bf248da5-da57-4a9e-be7b-8017f558e390" style="object-fit: contain;">
+</div>
+
+正文也没有什么需要手动调整的地方，对应文件为setting1.tex，里面是页眉、页面文字的相关设置
+
+左上角是一级标题，右上角是二级标题，不过有时候隔一页才会出现二级标题
+
+主要还是得说说盒子的设置
+
